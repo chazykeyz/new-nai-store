@@ -1,29 +1,118 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { ThemeProvider } from "@/components/theme";
+import { store } from "@/utils/store";
+import { Asset } from "expo-asset";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import { useCallback, useEffect, useState } from "react";
+import "react-native-reanimated";
+import { Provider } from "react-redux";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const loaded = useAppResources();
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
+  if (!loaded) return null;
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <GestureHandlerRootView>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
+            {/* AUTHENTICATION SCREENS */}
+            <Stack.Screen
+              name="(auth)/otp"
+              options={{
+                title: "Enter your phone number",
+                headerBackVisible: false,
+              }}
+            />
+            <Stack.Screen
+              name="(auth)/[phoneNumber]"
+              options={{
+                headerBackTitle: "Edit number",
+              }}
+            />
+
+            {/*OTHER STACKS LIKE DETAILS*/}
+            <Stack.Screen
+              name="(screenSheets)/[preOrderDetails]"
+              options={{ presentation: "formSheet", headerShown: false }}
+            />
+
+            {/* BOTTOM SHEETS */}
+            <Stack.Screen
+              name="(bottomSheets)/sizeSheet"
+              options={{
+                presentation: "formSheet",
+                sheetAllowedDetents: [0.4],
+                headerShown: false,
+                sheetCornerRadius: 30,
+              }}
+            />
+            <Stack.Screen
+              name="(bottomSheets)/colorSheet"
+              options={{
+                presentation: "formSheet",
+                sheetAllowedDetents: [0.4],
+                headerShown: false,
+                sheetCornerRadius: 30,
+              }}
+            />
+            <Stack.Screen
+              name="(screenSheets)/searchSheet"
+              options={{
+                headerShown: false,
+                presentation: "formSheet",
+                sheetCornerRadius: 30,
+              }}
+            />
+          </Stack>
+          <StatusBar style="auto" />
+        </GestureHandlerRootView>
+      </ThemeProvider>
+    </Provider>
   );
 }
+
+const useAppResources = (): boolean => {
+  const [fontsLoaded] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    FiraMono: require("../assets/fonts/FiraCode-Regular.ttf"),
+    boldFont: require("../assets/fonts/PPRadioGrotesk-Black.otf"),
+  });
+
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  const preloadImages = useCallback(async () => {
+    await Asset.loadAsync([
+      require("../assets/images/logo.png"),
+      require("../assets/images/logo2.png"),
+      // Add more static images here
+    ]);
+    setImagesLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    const prepare = async () => {
+      try {
+        await preloadImages(); // Preload local images
+      } catch (e) {
+        console.warn("🛑 Image preload failed:", e);
+      } finally {
+        if (fontsLoaded && imagesLoaded) SplashScreen.hideAsync(); // Only hide splash when fonts + images are ready
+      }
+    };
+
+    if (fontsLoaded) prepare();
+  }, [fontsLoaded, preloadImages, imagesLoaded]);
+
+  return fontsLoaded && imagesLoaded;
+};

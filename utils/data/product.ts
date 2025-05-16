@@ -1,0 +1,242 @@
+import { Product } from "@/constants/types";
+
+export const productData: Product[] = [
+  {
+    id: "1",
+    name: "Cotton T-Shirt",
+    price: 15000,
+    discount: 13000,
+    images: [
+      "https://images.unsplash.com/photo-1571867424485-369464ed33cc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2xvdGglMjBmYXNoaW9ufGVufDB8fDB8fHww",
+      "https://images.unsplash.com/photo-1629299342878-b15ff4f0c502?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNsb3RoJTIwZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+    ],
+    description:
+      "Soft, breathable cotton T-shirt available in multiple colors.",
+    category: "Clothing",
+  },
+  {
+    id: "2",
+    name: "Leather Sneakers",
+    price: 34000,
+    discount: 25000,
+    images: [
+      "https://plus.unsplash.com/premium_photo-1723780808432-357c758ade35?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGNsb3RoJTIwZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+      "https://images.unsplash.com/photo-1629299342291-98995bcca891?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNsb3RoJTIwZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+    ],
+    description:
+      "Stylish leather sneakers with cushioned soles for all-day comfort.",
+    category: "Clothing",
+  },
+  {
+    id: "3",
+    name: "Denim Jacket",
+    price: 28000,
+    discount: 24000,
+    images: [
+      "https://plus.unsplash.com/premium_photo-1674828601362-afb73c907ebe?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGNsb3RoJTIwZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+      "https://images.unsplash.com/photo-1716541424992-003317384446?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fGNsb3RoJTIwZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+    ],
+    description:
+      "Classic denim jacket with a modern fit, perfect for casual wear.",
+    category: "Clothing",
+  },
+  {
+    id: "4",
+    name: "Hooded Sweatshirt",
+    price: 22000,
+    discount: 19000,
+    images: [
+      "https://images.unsplash.com/photo-1669479033025-01bc44921fff?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHdvbWVuJTIwY2xvdGglMjBmYXNoaW9ufGVufDB8fDB8fHww",
+      "https://images.unsplash.com/photo-1517472292914-9570a594783b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fHdvbWVuJTIwY2xvdGglMjBmYXNoaW9ufGVufDB8fDB8fHww",
+    ],
+    description: "Cozy hooded sweatshirt with a kangaroo pocket.",
+    category: "Clothing",
+  },
+  {
+    id: "5",
+    name: "Slim Fit Jeans",
+    price: 26000,
+    discount: 23000,
+    images: [
+      "https://plus.unsplash.com/premium_photo-1740459879733-1a82dae4c41d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEyfHx8ZW58MHx8fHx8",
+      "https://plus.unsplash.com/premium_photo-1740212732346-e2c433d0d057?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDU3fHx8ZW58MHx8fHx8",
+    ],
+    description: "Comfortable slim fit jeans with a stretchable fabric.",
+    category: "Clothing",
+  },
+  {
+    id: "6",
+    name: "Graphic Tee",
+    price: 14000,
+    discount: 12000,
+    images: [
+      "https://i.pinimg.com/736x/ea/bc/3e/eabc3e4bdbdf71eff07cc712b80eff6c.jpg",
+      "https://i.pinimg.com/736x/16/c8/ac/16c8ac0cc4dea8d7c1e2414465290851.jpg",
+    ],
+    description: "Trendy graphic T-shirt with vibrant designs.",
+    category: "Clothing",
+  },
+  {
+    id: "7",
+    name: "Chino Pants",
+    price: 24000,
+    discount: 21000,
+    images: [
+      "https://i.pinimg.com/736x/a2/55/b1/a255b149b675af4c4763ca1780d086df.jpg",
+      "https://images.unsplash.com/photo-1654707634812-3ce01a6258f9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d29tZW4lMjBiYWdzJTIwZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+    ],
+    description: "Versatile chino pants for both casual and formal occasions.",
+    category: "Clothing",
+  },
+  {
+    id: "8",
+    name: "Knit Sweater",
+    price: 30000,
+    discount: 27000,
+    images: [
+      "https://plus.unsplash.com/premium_photo-1671198905435-20f8d166efb2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8d29tZW4lMjBmYXNoaW9ufGVufDB8fDB8fHww",
+      "https://images.unsplash.com/photo-1552874869-5c39ec9288dc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d29tZW4lMjBmYXNoaW9ufGVufDB8fDB8fHww",
+    ],
+    description: "Warm knit sweater with a soft, cozy feel.",
+    category: "Clothing",
+  },
+  {
+    id: "9",
+    name: "Bomber Jacket",
+    price: 35000,
+    discount: 30000,
+    images: [
+      "https://images.unsplash.com/photo-1590159983013-d4ff5fc71c1d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTV8fHdvbWVuJTIwZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+      "https://images.unsplash.com/photo-1593380090147-a2192b72a9ae?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fHdvbWVuJTIwZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+    ],
+    description: "Stylish bomber jacket with a modern, urban look.",
+    category: "Clothing",
+  },
+  {
+    id: "10",
+    name: "Linen Shirt",
+    price: 20000,
+    discount: 18000,
+    images: [
+      "https://i.pinimg.com/736x/81/f3/ba/81f3baec0b90bbd74f6160ff7e17bf59.jpg",
+      "https://i.pinimg.com/736x/42/8d/fb/428dfb1e3d23fa5b022393a7c46199ac.jpg",
+    ],
+    description: "Lightweight linen shirt, perfect for summer.",
+    category: "Clothing",
+  },
+  {
+    id: "11",
+    name: "Cargo Shorts",
+    price: 18000,
+    discount: 15000,
+    images: [
+      "https://i.pinimg.com/736x/bb/63/bb/bb63bbb898f53a6875ef08883dacb38a.jpg",
+      "https://i.pinimg.com/736x/c1/ce/7c/c1ce7c09b29b3a5c59800f6f875c13cd.jpg",
+    ],
+    description: "Durable cargo shorts with multiple pockets.",
+    category: "Clothing",
+  },
+  {
+    id: "12",
+    name: "Flannel Shirt",
+    price: 22000,
+    discount: 20000,
+    images: [
+      "https://i.pinimg.com/736x/f5/ab/cd/f5abcdec66c80b39bb292d7c37349fbc.jpg",
+      "https://i.pinimg.com/736x/02/28/d3/0228d3c627c9827a58662b1387f12535.jpg",
+    ],
+    description: "Classic flannel shirt with a soft, warm fabric.",
+    category: "Clothing",
+  },
+  {
+    id: "13",
+    name: "Athletic Leggings",
+    price: 25000,
+    discount: 22000,
+    images: [
+      "https://i.pinimg.com/736x/d3/18/d1/d318d1288d5bd6ba4ef98b1edf1adb52.jpg",
+      "https://i.pinimg.com/736x/46/5e/df/465edfa61af999d68cdd2a54eac772d5.jpg",
+    ],
+    description: "Stretchy athletic leggings for workouts or casual wear.",
+    category: "Clothing",
+  },
+  {
+    id: "14",
+    name: "V-Neck Sweater",
+    price: 27000,
+    discount: 24000,
+    images: [
+      "https://i.pinimg.com/736x/e1/37/b0/e137b0954f7b9bc1fe70c384d7f6aead.jpg",
+      "https://i.pinimg.com/736x/25/45/37/254537f923ced6e1e414fbcf8ae0af18.jpg",
+    ],
+    description: "Elegant V-neck sweater for a polished look.",
+    category: "Clothing",
+  },
+  {
+    id: "15",
+    name: "Windbreaker Jacket",
+    price: 30000,
+    discount: 27000,
+    images: [
+      "https://i.pinimg.com/736x/b9/a8/05/b9a80504c46f139a9d5bcbedb6608021.jpg",
+      "https://i.pinimg.com/736x/e7/e8/8d/e7e88d1ea816812c8ed3b90909106a34.jpg",
+    ],
+    description: "Lightweight windbreaker jacket for outdoor activities.",
+    category: "Clothing",
+  },
+  {
+    id: "16",
+    name: "Polo Shirt",
+    price: 18000,
+    discount: 16000,
+    images: [
+      "https://images.unsplash.com/photo-1596356453261-0d265ae2520a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D",
+    ],
+    description: "Classic polo shirt for a smart-casual style.",
+    category: "Clothing",
+  },
+  {
+    id: "17",
+    name: "Denim Shorts",
+    price: 20000,
+    discount: 18000,
+    images: [
+      "https://images.unsplash.com/photo-1583316174775-bd6dc0e9f298?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDN8fHxlbnwwfHx8fHw%3D",
+    ],
+    description: "Casual denim shorts with a relaxed fit.",
+    category: "Clothing",
+  },
+  {
+    id: "18",
+    name: "Cardigan",
+    price: 28000,
+    discount: 25000,
+    images: [
+      "https://plus.unsplash.com/premium_photo-1664872566654-8ace5ed675e4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fHw%3D",
+    ],
+    description: "Soft cardigan for layering in cooler weather.",
+    category: "Clothing",
+  },
+  {
+    id: "19",
+    name: "Track Pants",
+    price: 23000,
+    discount: 20000,
+    images: [
+      "https://plus.unsplash.com/premium_photo-1664872566732-d5a16add5989?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEyfHx8ZW58MHx8fHx8",
+    ],
+    description: "Comfortable track pants for lounging or exercise.",
+    category: "Clothing",
+  },
+  {
+    id: "20",
+    name: "Trench Coat",
+    price: 40000,
+    discount: 36000,
+    images: [
+      "https://plus.unsplash.com/premium_photo-1664872565905-1ac647cbe2dc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM5fHx8ZW58MHx8fHx8",
+    ],
+    description: "Timeless trench coat for a sophisticated look.",
+    category: "Clothing",
+  },
+];
