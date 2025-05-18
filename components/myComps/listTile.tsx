@@ -33,6 +33,7 @@ interface ListTileProps {
   separator?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   noTrailing?: boolean;
+  noPadding?: boolean;
 }
 
 const MyListTile: React.FC<ListTileProps> = ({
@@ -57,6 +58,7 @@ const MyListTile: React.FC<ListTileProps> = ({
   separator = true,
   containerStyle,
   noTrailing = false,
+  noPadding = false,
 }) => {
   const widthL = useSharedValue<number>(0);
 
@@ -115,7 +117,11 @@ const MyListTile: React.FC<ListTileProps> = ({
         </Animated.View>
 
         {/* leading */}
-        {leading && <View style={styles.leading}>{leading}</View>}
+        {leading && (
+          <View style={[styles.leading, { paddingLeft: noPadding ? 0 : 15 }]}>
+            {leading}
+          </View>
+        )}
         <View
           style={[
             styles.leftRightContainer,
@@ -148,11 +154,10 @@ const MyListTile: React.FC<ListTileProps> = ({
             )}
             {thirdTitle && (
               <View style={styles.iconText}>
-                ({thirdTitleIcon && thirdTitleIcon}
+                {thirdTitleIcon && thirdTitleIcon}
                 <Text style={[styles.subtitle, thirdTitleStyle]}>
                   {thirdTitle}
                 </Text>
-                )
               </View>
             )}
           </View>
@@ -204,7 +209,6 @@ const styles = StyleSheet.create({
   },
   leading: {
     marginRight: 10,
-    paddingLeft: 15,
   },
   leftRightContainer: {
     flex: 1,
@@ -231,6 +235,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     color: "#666",
+    paddingVertical: 1,
   },
   iconText: {
     flexDirection: "row",

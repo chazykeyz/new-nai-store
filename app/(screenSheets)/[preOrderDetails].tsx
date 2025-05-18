@@ -1,6 +1,6 @@
 import {
+  Animated,
   Image,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -8,154 +8,121 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { EvilIcons, Feather, Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { globalStyle } from "@/constants/styles";
 import { cartData } from "@/utils/data/cart";
 import { CartItem } from "@/constants/types";
-import { Colors } from "@/constants/Colors";
 import Trackline from "@/components/Comps/trackline";
-
+import MyGroupTile from "@/components/myComps/groupTile";
 const PreOrderDetails = () => {
+  const navigation = useNavigation();
   const { height }: { height: number } = useWindowDimensions();
+  const scrollY = new Animated.Value(0);
+
+  scrollY.addListener(({ value }) => {
+    if (value > 30) {
+      navigation.setOptions({
+        headerTitle: "Order Details",
+        headerShadowVisible: true,
+      });
+    } else {
+      navigation.setOptions({
+        headerTitle: "",
+        headerShadowVisible: false,
+      });
+    }
+  });
   return (
-    <View style={[styles.screen, { height }]}>
-      <View style={styles.closeContainer}>
-        <Pressable
-          onPress={() => {
-            router.back();
-          }}
-          style={styles.closeIcon}
-        >
-          <EvilIcons name="close" size={18} color="black" />
-        </Pressable>
-      </View>
-
-      <View style={styles.orderTitleContainer}>
-        <Text style={[styles.orderTitle, { fontWeight: "bold" }]}>
-          Order ID:
-        </Text>
-        <Text style={styles.orderTitle}>#565788</Text>
-      </View>
-      <Text style={styles.orderSubtitle}>25 Oct, 2025 • Tsh 1,000,000/=</Text>
-
+    <View style={[{ height }]}>
       {/* SCROLL CONTENT */}
       <ScrollView
-        style={{ paddingTop: 10 }}
+        style={{ padding: 10 }}
         showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}
       >
+        <View style={{ paddingBottom: 10 }}>
+          <Text style={globalStyle.largeTitle}>0rder Details</Text>
+        </View>
+
+        <MyGroupTile
+          list={[
+            {
+              title: "Order ID",
+              noTrailing: true,
+              preTrailing: <Text>#565788</Text>,
+            },
+            {
+              title: "Date created",
+              noTrailing: true,
+              preTrailing: <Text>25 Oct, 2025</Text>,
+            },
+            {
+              title: "Order Amount",
+              noTrailing: true,
+              preTrailing: <Text>Tzs 200,000</Text>,
+            },
+          ]}
+        />
+
         {/* TRACKING LINE */}
         <Trackline />
-        {/* BREAK LINE */}
-        <Text
-          style={{
-            textAlign: "center",
-            color: "rgba(0,0,0,.3)",
-            marginVertical: 10,
-          }}
-        >
-          --------------------------------------------------------------------
-        </Text>
+
         {/* SUMMARY */}
-        <Text style={globalStyle.subtitle}>Summary</Text>
+        <Text style={[{ marginBottom: 10, fontWeight: "500", fontSize: 18 }]}>
+          Summary
+        </Text>
+
         {/* SUMMARY LIST */}
-        {cartData.map((item: CartItem, index: number) => (
-          <View key={index}>
-            <View style={styles.cartContainer}>
-              <View style={styles.productContainer}>
-                {/* IMAGE */}
+        <MyGroupTile
+          list={cartData.map((item: CartItem, index: number) => {
+            return {
+              title: item.name,
+              subtitle: "Size • S(Small)",
+              preTrailing: (
+                <Text style={{ fontSize: 15 }}> Tzs {item.price}</Text>
+              ),
+
+              leading: (
                 <Image
                   source={{ uri: item.images[0] }}
-                  height={52}
-                  width={52}
+                  height={40}
+                  width={40}
                   style={styles.image}
                 />
-                <View
-                  style={{
-                    justifyContent: "space-between",
-                  }}
-                >
-                  {/* PRODUCT DETAILS */}
-                  <View>
-                    <Text style={styles.title}>{item.name}</Text>
+              ),
+              onPress: () => {
+                router.push("/payment");
+              },
+            };
+          })}
+        />
 
-                    <Text
-                      style={[styles.title, { color: "gray", fontWeight: 400 }]}
-                    >
-                      Blue / S
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.removeIcon}>
-                <View>
-                  <Text style={[styles.title, { fontFamily: "SpaceMono" }]}>
-                    {item.price}/=
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-        ))}
-        {/* BREAK LINE */}
-        <Text
-          style={{
-            textAlign: "center",
-            color: "rgba(0,0,0,.3)",
-            paddingBottom: 5,
-          }}
-        >
-          --------------------------------------------------------------------
-        </Text>
-        {/* SUBTOTAL */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text>Subtotal</Text>
-          <Text style={[styles.title, { fontFamily: "SpaceMono" }]}>
-            1,000,000/=
-          </Text>
-        </View>
-        {/* DISCOUNT */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text>Discount</Text>
-          <Text style={[styles.title, { fontFamily: "SpaceMono" }]}>
-            1000,000/=
-          </Text>
-        </View>
-        {/* BREAK LINE */}
-        <Text
-          style={{
-            textAlign: "center",
-            color: "rgba(0,0,0,.3)",
-          }}
-        >
-          --------------------------------------------------------------------
-        </Text>
-        {/* TOTAL */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text style={styles.title}>Total</Text>
-          <Text
-            style={[styles.title, { fontFamily: "SpaceMono", fontSize: 18 }]}
-          >
-            1000,000/=
-          </Text>
-        </View>
+        <View style={{ height: 20 }} />
+        <MyGroupTile
+          list={[
+            {
+              title: "Subtotal",
+              noTrailing: true,
+              preTrailing: <Text>1,000,000/={"  "}</Text>,
+            },
+            {
+              title: "Discount",
+              noTrailing: true,
+              preTrailing: <Text> -500,000/={"  "}</Text>,
+            },
+            {
+              title: "Total",
+              noTrailing: true,
+              preTrailing: <Text style={[styles.title]}> 500,000/={"  "}</Text>,
+            },
+          ]}
+        />
 
-        <View style={{ padding: 40 }} />
+        <View style={{ height: 150 }} />
       </ScrollView>
     </View>
   );
@@ -168,13 +135,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     padding: 20,
-    position: "relative",
   },
   closeContainer: {
     flexDirection: "row",
     gap: 10,
     justifyContent: "flex-end",
-    position: "absolute",
     right: 10,
     top: 25,
   },

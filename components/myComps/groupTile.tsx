@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextStyle, View } from "react-native";
 import React from "react";
 import MyListTile from "./listTile";
-import { Ionicons } from "@expo/vector-icons";
+import { EvilIcons, Ionicons } from "@expo/vector-icons";
 import { JSX } from "react";
 
 type ListProps = {
@@ -14,6 +14,7 @@ type ListProps = {
   preTrailing?: React.ReactElement;
   titleStyle?: TextStyle;
   noTrailing?: boolean;
+  thirdTitle?: string;
 };
 type GroupTileProps = {
   list: ListProps[];
@@ -39,14 +40,16 @@ const MyGroupTile: React.FC<GroupTileProps> = ({
             leading={item.leading}
             title={item.title}
             subtitle={item.subtitle}
+            thirdTitle={item.thirdTitle}
             titleStyle={item.titleStyle}
             separator={list.length !== index + 1}
+            noPadding={noPadding}
             trailing={
               !item.noTrailing ? (
                 item.trailing ? (
                   item.trailing
                 ) : (
-                  <Ionicons name="chevron-forward" size={20} color="gray" />
+                  <EvilIcons name="chevron-right" size={24} color="gray" />
                 )
               ) : undefined
             }

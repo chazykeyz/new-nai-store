@@ -39,12 +39,11 @@ export default TileCard;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 16,
   },
   subtitle: {
-    fontSize: 15,
-    color: "rgba(0,0,0,.7)",
+    fontSize: 14,
+    color: Colors.text,
   },
   trackDetail: {
     flexDirection: "row",

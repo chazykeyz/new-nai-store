@@ -54,9 +54,10 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="(orders)"
+        name="orders"
         options={{
           title: "Orders",
+
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name={focused ? "bag-check" : "bag-check-outline"}

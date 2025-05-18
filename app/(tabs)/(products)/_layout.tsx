@@ -3,6 +3,7 @@ import React from "react";
 import { Stack } from "expo-router";
 import { useTheme } from "@/components/theme";
 import { Colors } from "@/constants/Colors";
+import CartItem from "@/components/Comps/cartItem";
 
 const ProductLayout = () => {
   const theme = useTheme();
@@ -10,17 +11,27 @@ const ProductLayout = () => {
     <Stack
       screenOptions={{
         contentStyle: { backgroundColor: theme.backgroundColor },
-        headerTintColor: "black",
+        headerTintColor: Colors.identifier,
         headerTitle: "",
         // headerBackButtonDisplayMode: "minimal",
       }}
     >
-      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="index"
+        options={{
+          contentStyle: { backgroundColor: "white" },
+          headerShadowVisible: false,
+          headerBackVisible: false,
+          title: "",
+          headerRight: () => <CartItem />,
+        }}
+      />
       <Stack.Screen
         name="[shopProductDetails]"
         options={{
           headerBackTitle: "Products",
           headerTitleStyle: { color: "black" },
+          headerShadowVisible: false,
         }}
       />
     </Stack>

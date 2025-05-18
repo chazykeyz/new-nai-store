@@ -59,7 +59,7 @@ const SearchSheet = () => {
           numColumns={2}
           renderItem={({ item, index }: { item: Product; index: number }) => (
             <View style={styles.listContainer} key={index}>
-              <ProductCard item={item} link={"/[shopProductDetails]"} />
+              <ProductCard item={item} link={"/[homeProductDetails]"} />
             </View>
           )}
           keyExtractor={(item) => item.id}

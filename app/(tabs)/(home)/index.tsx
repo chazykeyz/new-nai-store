@@ -1,7 +1,9 @@
 import {
   FlatList,
   ListRenderItem,
+  Platform,
   Pressable,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,8 +17,8 @@ import { ProductCard } from "@/components/Comps/cards";
 import { globalStyle } from "@/constants/styles";
 import { router, useNavigation } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { Feather, FontAwesome5 } from "@expo/vector-icons";
-import EmptyComp from "@/components/Comps/empty";
+import { Feather, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import EmptyComp from "@/components/myComps/empty";
 import { Image } from "expo-image";
 
 const Home = () => {
@@ -30,12 +32,14 @@ const Home = () => {
       setIsScrolled(true);
       navigation.setOptions({
         headerShadowVisible: true,
+        headerTitle: "Nai Store",
         headerStyle: { backgroundColor: Colors.lighter },
       });
     } else if (offsetY <= 0 && isScrolled) {
       setIsScrolled(false);
       navigation.setOptions({
         headerShadowVisible: false,
+        headerTitle: "",
         headerStyle: { backgroundColor: "white" },
       });
     }
@@ -46,54 +50,56 @@ const Home = () => {
   const ITEM_WIDTH = width / NUM_ITEMS_VISIBLE;
 
   return (
-    <View>
-      <View style={[globalStyle.screen]}>
-        <ScrollView
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-          showsVerticalScrollIndicator={false}
+    <SafeAreaView>
+      <ScrollView
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={globalStyle.screen}>
+          <Text style={globalStyle.largeTitle}>Nai Store</Text>
+        </View>
+        <Pressable
+          onPress={() => {
+            router.push("/searchSheet");
+          }}
+          style={[globalStyle.searchContainer, { marginHorizontal: 16 }]}
         >
-          <Pressable
-            onPress={() => {
-              router.push("/searchSheet");
-            }}
-            style={globalStyle.searchContainer}
-          >
-            <Feather name="search" size={20} color="black" />
-            <Text style={styles.searchText}>Search</Text>
-          </Pressable>
-          <ScrollAds />
-          <MyLister
-            data={productData.slice(0, 5)}
-            title="From shop"
-            renderItem={({ item }: { item: Product }) => (
-              <View style={[styles.listContainer, { width: ITEM_WIDTH - 18 }]}>
-                <ProductCard item={item} link={"/[homeProductDetails]"} />
-              </View>
-            )}
-          />
-          <MyLister
-            data={productData.slice(5, 10)}
-            title="Order Items"
-            renderItem={({ item }: { item: Product }) => (
-              <View style={[styles.listContainer, { width: ITEM_WIDTH - 18 }]}>
-                <ProductCard item={item} link={"/[homeProductDetails]"} />
-              </View>
-            )}
-          />
-          <MyLister
-            data={productData.slice(10, 15)}
-            title="Promos & offers"
-            renderItem={({ item }: { item: Product }) => (
-              <View style={[styles.listContainer, { width: ITEM_WIDTH - 18 }]}>
-                <ProductCard item={item} link={"/[homeProductDetails]"} />
-              </View>
-            )}
-          />
-          <View style={{ height: 100 }} />
-        </ScrollView>
-      </View>
-    </View>
+          <Feather name="search" size={20} color="black" />
+          <Text style={styles.searchText}>Search</Text>
+        </Pressable>
+
+        <ScrollAds />
+        <MyLister
+          data={productData.slice(0, 5)}
+          title="From shop"
+          renderItem={({ item }: { item: Product }) => (
+            <View style={[styles.listContainer, { width: ITEM_WIDTH - 18 }]}>
+              <ProductCard item={item} link={"/[homeProductDetails]"} />
+            </View>
+          )}
+        />
+        <MyLister
+          data={productData.slice(5, 10)}
+          title="Order Items"
+          renderItem={({ item }: { item: Product }) => (
+            <View style={[styles.listContainer, { width: ITEM_WIDTH - 18 }]}>
+              <ProductCard item={item} link={"/[homeProductDetails]"} />
+            </View>
+          )}
+        />
+        <MyLister
+          data={productData.slice(10, 15)}
+          title="Promos & offers"
+          renderItem={({ item }: { item: Product }) => (
+            <View style={[styles.listContainer, { width: ITEM_WIDTH - 18 }]}>
+              <ProductCard item={item} link={"/[homeProductDetails]"} />
+            </View>
+          )}
+        />
+        <View style={{ height: 100 }} />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -131,19 +137,31 @@ const MyLister = ({
   data: any;
 }) => {
   return (
-    <View style={{ marginTop: 10 }}>
+    <View style={[{ marginTop: 10 }]}>
       <View
-        style={{
-          flexDirection: "row",
-        }}
+        style={[
+          {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+          },
+          globalStyle.screen,
+        ]}
       >
         <Text style={globalStyle.subtitle}>{title}</Text>
-        <Feather name="chevron-right" size={24} color={Colors.identifier} />
+        <Text
+          style={{ color: Colors.identifier }}
+          onPress={() => {
+            router.push("/(home)/lister/[lister]");
+          }}
+        >
+          See all
+        </Text>
       </View>
       <FlatList
         data={data ? data : []}
         horizontal={true}
-        style={{ marginTop: 5 }}
+        style={{ marginTop: 5, paddingLeft: 16 }}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         showsHorizontalScrollIndicator={false}
@@ -185,14 +203,14 @@ const ScrollAds = () => {
 
   const data = productData.slice(15);
   return (
-    <View>
+    <View style={[globalStyle.screen, { marginBottom: 10, marginTop: 5 }]}>
       <View
         style={{
           overflow: "hidden",
           backgroundColor: Colors.lighter,
           borderRadius: 20,
           height: 220,
-          width: width - 25,
+          width: width - 33,
         }}
       >
         <FlatList

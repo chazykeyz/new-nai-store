@@ -40,6 +40,8 @@ const MyFormSheet = ({
       useNativeDriver
       backdropOpacity={1}
       hideModalContentWhileAnimating
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
       customBackdrop={
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
           <BlurView
@@ -60,7 +62,12 @@ const MyFormSheet = ({
           style={{ width: "100%", alignItems: "center", marginVertical: 10 }}
         >
           <View
-            style={{ width: 40, height: 4, backgroundColor: Colors.lightGray }}
+            style={{
+              width: 40,
+              height: 4,
+              backgroundColor: Colors.lightGray,
+              borderRadius: 20,
+            }}
           />
           <View
             style={{

@@ -1,48 +1,39 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
 import { useTheme } from "@/components/theme";
-import CartItem from "@/components/Comps/cartItem";
 import { Colors } from "@/constants/Colors";
+import CartItem from "@/components/Comps/cartItem";
 
-const HomeLayout = () => {
+const ProfileLayout = () => {
   const theme = useTheme();
   return (
     <Stack
       screenOptions={{
-        contentStyle: { backgroundColor: theme.backgroundColor },
-        headerTintColor: "black",
+        headerTintColor: Colors.identifier,
+        headerTitle: "",
         // headerBackButtonDisplayMode: "minimal",
       }}
     >
       <Stack.Screen
         name="index"
         options={{
-          contentStyle: { backgroundColor: "white" },
-          headerShadowVisible: false,
           headerBackVisible: false,
-          title: "",
-          headerRight: () => <CartItem />,
-        }}
-      />
-
-      <Stack.Screen
-        name="[homeProductDetails]"
-        options={{
-          headerBackTitle: "Back",
           headerTitleStyle: { color: "black" },
-          headerTintColor: Colors.identifier,
+          headerStyle: {
+            backgroundColor: "whitesmoke",
+          },
+          contentStyle: { backgroundColor: "whitesmoke" },
           headerShadowVisible: false,
-          title: "",
         }}
       />
-
       <Stack.Screen
-        name="lister/[lister]"
+        name="liked"
         options={{
-          headerBackTitle: "Home",
+          headerBackTitle: "Backs",
           headerTintColor: Colors.identifier,
           headerTitleStyle: { color: "black" },
+          contentStyle: { backgroundColor: "white" },
           headerShadowVisible: false,
           title: "",
           headerRight: () => <CartItem />,
@@ -52,6 +43,6 @@ const HomeLayout = () => {
   );
 };
 
-export default HomeLayout;
+export default ProfileLayout;
 
 const styles = StyleSheet.create({});

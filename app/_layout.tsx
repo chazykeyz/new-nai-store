@@ -2,13 +2,16 @@ import { ThemeProvider } from "@/components/theme";
 import { store } from "@/utils/store";
 import { Asset } from "expo-asset";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useState } from "react";
 import "react-native-reanimated";
 import { Provider } from "react-redux";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Platform, Pressable, Text, View } from "react-native";
+import { EvilIcons } from "@expo/vector-icons";
+import { globalStyle } from "@/constants/styles";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -24,7 +27,13 @@ export default function RootLayout() {
         <GestureHandlerRootView>
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                headerShown: false,
+                contentStyle: { backgroundColor: "red" },
+              }}
+            />
 
             {/* AUTHENTICATION SCREENS */}
             <Stack.Screen
@@ -44,28 +53,46 @@ export default function RootLayout() {
             {/*OTHER STACKS LIKE DETAILS*/}
             <Stack.Screen
               name="(screenSheets)/[preOrderDetails]"
-              options={{ presentation: "formSheet", headerShown: false }}
+              options={{
+                headerBackTitle: "Back",
+                title: "",
+                headerShadowVisible: false,
+                contentStyle: { backgroundColor: "whitesmoke" },
+                headerStyle: {
+                  backgroundColor: "whitesmoke",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="(screenSheets)/bag"
+              options={{
+                headerBackTitle: "Back",
+                title: "",
+                headerShadowVisible: false,
+                contentStyle: { backgroundColor: "whitesmoke" },
+              }}
             />
 
             {/* BOTTOM SHEETS */}
             <Stack.Screen
-              name="(bottomSheets)/sizeSheet"
+              name="(bottomSheets)/paymentHistory"
               options={{
-                presentation: "formSheet",
-                sheetAllowedDetents: [0.4],
-                headerShown: false,
-                sheetCornerRadius: 30,
+                title: "Payment history",
+                presentation: Platform.OS === "ios" ? "formSheet" : "card",
+                sheetCornerRadius: 20,
+                contentStyle: { backgroundColor: "white" },
+                headerLeft: () => (
+                  <Pressable
+                    onPress={() => {
+                      router.back();
+                    }}
+                  >
+                    <Text>Cancel</Text>
+                  </Pressable>
+                ),
               }}
             />
-            <Stack.Screen
-              name="(bottomSheets)/colorSheet"
-              options={{
-                presentation: "formSheet",
-                sheetAllowedDetents: [0.4],
-                headerShown: false,
-                sheetCornerRadius: 30,
-              }}
-            />
+
             <Stack.Screen
               name="(screenSheets)/searchSheet"
               options={{

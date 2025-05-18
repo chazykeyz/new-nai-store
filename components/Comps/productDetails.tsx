@@ -17,27 +17,29 @@ import PriceComp from "./price";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { sizeList } from "@/constants/custom";
-import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
+import MyFormSheet from "../myComps/customFormSheet";
+import SizeSheet from "@/app/(bottomSheets)/sizeSheet";
 
 const ProductDetailComp = ({ item }: { item: Product }) => {
   const { width }: { width: number } = useWindowDimensions();
+  const [sizeVisible, setSizeVisible] = useState(false);
 
   // const variables
   const [islike, setIslike] = useState<Boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
   const [size, setSize] = useState<string>(sizeList[2]);
-  const [color, setColor] = useState<string>("Black");
   const [inCart, setIncart] = useState<Boolean>(false);
 
   return (
-    <View style={globalStyle.screen}>
+    <View>
       {/* IMAGE SCROLL LIST */}
       <ScrollView
         horizontal={true}
         contentContainerStyle={styles.scroll}
         showsHorizontalScrollIndicator={false}
         pagingEnabled
+        style={{ paddingLeft: 16 }}
       >
         {item.images.map((image, index) => (
           <View style={styles.imageContainer} key={index}>
@@ -51,134 +53,127 @@ const ProductDetailComp = ({ item }: { item: Product }) => {
           </View>
         ))}
       </ScrollView>
-      {/* ITEM DETAIL */}
-      <View style={styles.detailContainer}>
-        {/* RIGHT NAME AND CATEGORY */}
-        <View>
-          <Text style={styles.name}>{item.name}</Text>
-          <View style={styles.categoryContainer}>
-            <Octicons name="stack" size={18} color="black" />
-            <Text style={styles.categoryText}>{item.category}</Text>
+      <View style={globalStyle.screen}>
+        {/* ITEM DETAIL */}
+        <View style={styles.detailContainer}>
+          {/* RIGHT NAME AND CATEGORY */}
+          <View>
+            <Text style={styles.name}>{item.name}</Text>
+            <View style={styles.categoryContainer}>
+              <Octicons name="stack" size={18} color="black" />
+              <Text style={styles.categoryText}>{item.category}</Text>
+            </View>
+          </View>
+
+          {/* LEFT LIKE AND SHARE ICONS */}
+          <View style={styles.iconsContainer}>
+            <Pressable
+              onPress={() => {
+                setIslike(!islike);
+              }}
+              style={[
+                styles.icons,
+                {
+                  backgroundColor: islike ? Colors.identifier : undefined,
+                  borderColor: islike ? Colors.identifier : "rgba(0,0,0,.2)",
+                },
+              ]}
+            >
+              {islike ? (
+                <AntDesign name="heart" size={16} color="white" />
+              ) : (
+                <AntDesign name="hearto" size={16} color="black" />
+              )}
+            </Pressable>
           </View>
         </View>
-
-        {/* LEFT LIKE AND SHARE ICONS */}
-        <View style={styles.iconsContainer}>
-          <Pressable
+        {/* PRICE */}
+        <View style={styles.priceCont}>
+          {/* MAIN PRICE */}
+          <PriceComp item={item} details={true} />
+          {/* DISCOUNT PERCENTAGE */}
+          {item.discount !== 0 && (
+            <View style={styles.percentContainer}>
+              <Text style={styles.percentText}>10% off</Text>
+            </View>
+          )}
+        </View>
+        <View style={{ marginVertical: 10 }}>
+          {/* SIZE */}
+          <TouchableOpacity
+            style={styles.quantityContainer}
             onPress={() => {
-              setIslike(!islike);
+              setSizeVisible(true);
             }}
-            style={[
-              styles.icons,
-              {
-                backgroundColor: islike ? Colors.identifier : undefined,
-                borderColor: islike ? Colors.identifier : "rgba(0,0,0,.2)",
-              },
-            ]}
           >
-            {islike ? (
-              <AntDesign name="heart" size={16} color="white" />
-            ) : (
-              <AntDesign name="hearto" size={16} color="black" />
-            )}
-          </Pressable>
-          <View style={styles.icons}>
-            <Feather name="upload" size={16} color="black" />
+            <Text style={styles.name}>Size</Text>
+
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={{ fontSize: 16, marginHorizontal: 5 }}>{size}</Text>
+
+              <Ionicons name="chevron-expand-outline" size={16} color="black" />
+            </View>
+          </TouchableOpacity>
+
+          {/* QUANTITY */}
+          <View style={styles.quantityContainer}>
+            <Text style={styles.name}>Quantity</Text>
+            <View style={styles.quantityValues}>
+              <Pressable
+                onPress={() => {
+                  if (quantity > 1) {
+                    setQuantity(quantity - 1);
+                  }
+                }}
+              >
+                <Feather
+                  name="minus"
+                  size={18}
+                  color={quantity > 1 ? "black" : "rgba(0,0,0,.3)"}
+                />
+              </Pressable>
+
+              <Text style={styles.quantity}>{quantity}</Text>
+
+              <Pressable
+                onPress={() => {
+                  setQuantity(quantity + 1);
+                }}
+              >
+                <Feather name="plus" size={18} color="black" />
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
-      {/* PRICE */}
-      <View style={styles.priceCont}>
-        {/* MAIN PRICE */}
-        <PriceComp item={item} details={true} />
-        {/* DISCOUNT PERCENTAGE */}
-        {item.discount !== 0 && (
-          <View style={styles.percentContainer}>
-            <Text style={styles.percentText}>10% off</Text>
-          </View>
-        )}
-      </View>
-      <View style={{ marginVertical: 10 }}>
-        {/* SIZE */}
-        <TouchableOpacity
-          style={styles.quantityContainer}
+        {/* ADD AND BUY BUTTONS */}
+        <Pressable
           onPress={() => {
-            router.push("/sizeSheet");
+            setIncart(!inCart);
           }}
+          style={inCart ? globalStyle.tertiaryBtn : globalStyle.primaryBtn}
         >
-          <Text style={styles.name}>Size</Text>
-
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ fontSize: 16, marginHorizontal: 5 }}>{size}</Text>
-
-            <Ionicons name="chevron-expand-outline" size={16} color="black" />
-          </View>
-        </TouchableOpacity>
-
-        {/* COLOR */}
-        <TouchableOpacity
-          style={styles.quantityContainer}
-          onPress={() => {
-            router.push("/colorSheet");
-          }}
-        >
-          <Text style={styles.name}>Color</Text>
-
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ fontSize: 16, marginHorizontal: 5 }}>{color}</Text>
-
-            <Ionicons name="chevron-expand-outline" size={16} color="black" />
-          </View>
-        </TouchableOpacity>
-
-        {/* QUANTITY */}
-        <View style={styles.quantityContainer}>
-          <Text style={styles.name}>Quantity</Text>
-          <View style={styles.quantityValues}>
-            <Pressable
-              onPress={() => {
-                if (quantity > 1) {
-                  setQuantity(quantity - 1);
-                }
-              }}
-            >
-              <Feather
-                name="minus"
-                size={18}
-                color={quantity > 1 ? "black" : "rgba(0,0,0,.3)"}
-              />
-            </Pressable>
-
-            <Text style={styles.quantity}>{quantity}</Text>
-
-            <Pressable
-              onPress={() => {
-                setQuantity(quantity + 1);
-              }}
-            >
-              <Feather name="plus" size={18} color="black" />
-            </Pressable>
-          </View>
+          <Text style={styles.buttonText}>
+            {inCart ? "Remove from cart" : "Add to Cart"}
+          </Text>
+        </Pressable>
+        <View style={[globalStyle.secondaryBtn, { marginTop: 5 }]}>
+          <Text style={styles.buttonText}>Buy Now</Text>
         </View>
-      </View>
-      {/* ADD AND BUY BUTTONS */}
-      <TouchableOpacity
-        onPress={() => {
-          setIncart(!inCart);
-        }}
-        style={inCart ? globalStyle.tertiaryBtn : globalStyle.primaryBtn}
-      >
-        <Text style={styles.buttonText}>
-          {inCart ? "Remove from cart" : "Add to Cart"}
-        </Text>
-      </TouchableOpacity>
-      <View style={[globalStyle.secondaryBtn, { marginTop: 5 }]}>
-        <Text style={styles.buttonText}>Buy Now</Text>
-      </View>
-      {/* DESCRIPTIONS */}
-      <View style={{ marginTop: 20, padding: 10 }}>
-        <Text style={styles.name}>Description</Text>
-        <Text style={{ marginTop: 5 }}>{item.description}</Text>
+        {/* DESCRIPTIONS */}
+        <View style={{ marginTop: 20, padding: 10 }}>
+          <Text style={styles.name}>Description</Text>
+          <Text style={{ marginTop: 5 }}>{item.description}</Text>
+        </View>
+
+        {/* size bottome sheet */}
+        <MyFormSheet
+          isVisible={sizeVisible}
+          onClose={() => setSizeVisible(false)}
+          title="Choose Size"
+          height={450}
+        >
+          <SizeSheet close={() => setSizeVisible(false)} />
+        </MyFormSheet>
       </View>
     </View>
   );
@@ -227,7 +222,6 @@ const styles = StyleSheet.create({
   },
 
   percentContainer: {
-    width: 50,
     backgroundColor: "black",
     borderRadius: 7,
     color: "white",

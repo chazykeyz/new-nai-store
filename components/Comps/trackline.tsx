@@ -1,14 +1,25 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { globalStyle } from "@/constants/styles";
-import { AntDesign, FontAwesome, Fontisto, Ionicons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Feather,
+  FontAwesome,
+  Fontisto,
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 import TileCard from "./tile";
+import MyListTile from "../myComps/listTile";
 
 const Trackline = () => {
   return (
-    <View style={{ paddingTop: 10 }}>
-      <Text style={globalStyle.subtitle}>Trackline</Text>
+    <View style={{ paddingVertical: 20 }}>
+      <Text style={[{ marginBottom: 10, fontWeight: "500", fontSize: 18 }]}>
+        Trackline
+      </Text>
       <View style={styles.trackingContainer}>
         <View style={styles.trackingMap}>
           <AntDesign name="checkcircle" size={18} color={Colors.identifier} />
@@ -20,25 +31,141 @@ const Trackline = () => {
           <CircleDot />
         </View>
         <View style={styles.trackingDetails}>
-          <TileCard
-            title="Order Placed"
-            subtitle="Process Completed"
-            icon={<Ionicons name="bag-check-outline" size={24} color="black" />}
-          />
-          <TileCard
-            title="Order Processed"
-            subtitle="Process Completed"
-            icon={<FontAwesome name="gears" size={22} color="black" />}
-          />
-          <TileCard
-            title="Shipping"
-            subtitle="Process Completed"
-            icon={<Fontisto name="ship" size={24} color="black" />}
-          />
-          <TileCard
+          <View style={{ width: "100%" }}>
+            <MyListTile
+              title="Order Placed"
+              subtitle="12 May, 2024"
+              separator={false}
+              leading={
+                <View
+                  style={{
+                    borderRadius: 13,
+                    backgroundColor: Colors.lighter,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderWidth: 1,
+                    borderColor: "rgba(0,0,0,.1)",
+                    width: 40,
+                    height: 40,
+                  }}
+                >
+                  <Ionicons name="bag-handle" size={24} color="black" />
+                </View>
+              }
+              preTrailing={
+                <Text style={{ color: "#34C759", fontWeight: "600" }}>
+                  Completed{"   "}
+                </Text>
+              }
+            />
+            <View
+              style={{
+                height: StyleSheet.hairlineWidth,
+                width: "100%",
+                backgroundColor: Colors.lightGray,
+              }}
+            />
+          </View>
+          <View style={{ width: "100%" }}>
+            <MyListTile
+              title="Order Processed"
+              subtitle="12 May, 2024"
+              separator={false}
+              leading={
+                <View
+                  style={{
+                    borderRadius: 13,
+                    backgroundColor: Colors.lighter,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderWidth: 1,
+                    borderColor: "rgba(0,0,0,.1)",
+                    width: 40,
+                    height: 40,
+                  }}
+                >
+                  <MaterialIcons name="change-circle" size={24} color="black" />
+                </View>
+              }
+              preTrailing={
+                <Text style={{ color: Colors.text, fontWeight: "600" }}>
+                  Pending...{"   "}
+                </Text>
+              }
+            />
+            <View
+              style={{
+                height: StyleSheet.hairlineWidth,
+                width: "100%",
+                backgroundColor: Colors.lightGray,
+              }}
+            />
+          </View>
+          <View style={{ width: "100%" }}>
+            <MyListTile
+              title="Shipping"
+              subtitle="12 May, 2024"
+              separator={false}
+              leading={
+                <View
+                  style={{
+                    borderRadius: 13,
+                    backgroundColor: Colors.lighter,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderWidth: 1,
+                    borderColor: "rgba(0,0,0,.1)",
+                    width: 40,
+                    height: 40,
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="truck-outline"
+                    size={24}
+                    color="black"
+                  />
+                </View>
+              }
+              preTrailing={
+                <Text style={{ color: Colors.text, fontWeight: "600" }}>
+                  Pending...{"   "}
+                </Text>
+              }
+            />
+            <View
+              style={{
+                height: StyleSheet.hairlineWidth,
+                width: "100%",
+                backgroundColor: Colors.lightGray,
+              }}
+            />
+          </View>
+
+          <MyListTile
             title="Arrived"
-            subtitle="Your Order is at the Mall"
-            icon={<FontAwesome name="thumbs-o-up" size={22} color="black" />}
+            subtitle="12 May, 2024"
+            separator={false}
+            leading={
+              <View
+                style={{
+                  borderRadius: 13,
+                  backgroundColor: Colors.lighter,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderWidth: 1,
+                  borderColor: "rgba(0,0,0,.1)",
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                <MaterialIcons name="location-pin" size={24} color="black" />
+              </View>
+            }
+            preTrailing={
+              <Text style={{ color: Colors.text, fontWeight: "600" }}>
+                Pending...{"   "}
+              </Text>
+            }
           />
         </View>
       </View>
@@ -60,6 +187,8 @@ const styles = StyleSheet.create({
   trackingContainer: {
     flexDirection: "row",
     paddingVertical: 10,
+    backgroundColor: "white",
+    borderRadius: 15,
   },
   trackingMap: {
     width: "10%",
@@ -70,7 +199,7 @@ const styles = StyleSheet.create({
     width: "90%",
     justifyContent: "flex-start",
     alignItems: "center",
-    gap: 28,
+    gap: 10,
   },
   trackDetail: {
     flexDirection: "row",

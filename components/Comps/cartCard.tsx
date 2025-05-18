@@ -8,108 +8,73 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { cartData } from "@/utils/data/cart";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { EvilIcons, Feather, Ionicons } from "@expo/vector-icons";
 import { globalStyle } from "@/constants/styles";
+import { CartItem } from "@/constants/types";
+import MyGroupTile from "../myComps/groupTile";
 
 const CartCard = () => {
   const [quantity, setQuantity] = useState<number>(1);
   return (
     <View>
       <ScrollView>
-        {cartData.map((item, index) => (
-          <View key={index}>
-            <View style={styles.cartContainer}>
-              <View style={styles.productContainer}>
-                {/* IMAGE */}
+        <MyGroupTile
+          list={cartData.map((item: CartItem, index: number) => {
+            return {
+              title: item.name,
+              subtitle: "Size • S(Small)",
+              thirdTitle: `Tzs ${item.price}`,
+              preTrailing: (
+                <View style={styles.quantityValues}>
+                  <Pressable
+                    onPress={() => {
+                      if (quantity > 1) {
+                        setQuantity(quantity - 1);
+                      }
+                    }}
+                  >
+                    {quantity > 1 ? (
+                      <Feather name="minus" size={14} color="gray" />
+                    ) : (
+                      <EvilIcons name="close" size={14} color="gray" />
+                    )}
+                  </Pressable>
+
+                  <Text style={styles.quantity}>{quantity}</Text>
+
+                  <Pressable
+                    onPress={() => {
+                      setQuantity(quantity + 1);
+                    }}
+                  >
+                    <Feather name="plus" size={14} color="gray" />
+                  </Pressable>
+                </View>
+              ),
+
+              leading: (
                 <Image
                   source={{ uri: item.images[0] }}
-                  height={120}
-                  width={120}
+                  height={40}
+                  width={40}
                   style={styles.image}
                 />
-                <View
-                  style={{
-                    justifyContent: "space-between",
-                  }}
-                >
-                  {/* PRODUCT DETAILS */}
-                  <View style={styles.detail}>
-                    <Text style={styles.title}>{item.name}</Text>
-
-                    <Text style={[styles.title, { color: "gray" }]}>
-                      Blue / S
-                    </Text>
-                  </View>
-
-                  {/* QUANTITY */}
-
-                  <View style={styles.quantityValues}>
-                    <Pressable
-                      onPress={() => {
-                        if (quantity > 1) {
-                          setQuantity(quantity - 1);
-                        }
-                      }}
-                    >
-                      {quantity > 1 ? (
-                        <Feather
-                          name="minus"
-                          size={18}
-                          color={quantity > 1 ? "black" : "rgba(0,0,0,.3)"}
-                        />
-                      ) : (
-                        <Ionicons
-                          name="trash-outline"
-                          size={18}
-                          color="black"
-                        />
-                      )}
-                    </Pressable>
-
-                    <Text style={styles.quantity}>{quantity}</Text>
-
-                    <Pressable
-                      onPress={() => {
-                        setQuantity(quantity + 1);
-                      }}
-                    >
-                      <Feather name="plus" size={18} color="black" />
-                    </Pressable>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.removeIcon}>
-                <View>
-                  <Text style={styles.title}>{item.price}</Text>
-                  <Text
-                    style={[
-                      styles.title,
-                      globalStyle.lineStrike,
-                      { color: "gray" },
-                    ]}
-                  >
-                    {item?.discount}
-                  </Text>
-                </View>
-
-                <Pressable>
-                  <Ionicons name="trash-outline" size={22} color="gray" />
-                </Pressable>
-              </View>
-            </View>
-          </View>
-        ))}
+              ),
+              trailing: <Ionicons name="trash-outline" size={18} color="red" />,
+            };
+          })}
+        />
         <View
           style={{
-            marginBottom: 10,
+            padding: 20,
             flexDirection: "row",
             justifyContent: "space-between",
           }}
         >
-          <Text style={styles.title}>Subtotal</Text>
-          <Text style={styles.title}>100</Text>
+          <Text style={styles.title}>Bag subtotal</Text>
+          <Text style={styles.title}>Tzs 100</Text>
         </View>
-        <View style={[globalStyle.secondaryBtn, { marginTop: 5 }]}>
+        <View style={[globalStyle.secondaryBtn, { marginHorizontal: 20 }]}>
           <Text style={styles.buttonText}>Continue to checkout</Text>
         </View>
       </ScrollView>
@@ -142,17 +107,14 @@ const styles = StyleSheet.create({
   },
 
   quantity: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 13,
     marginHorizontal: 10,
+    fontWeight: "600",
   },
   quantityValues: {
-    paddingHorizontal: 7,
+    paddingHorizontal: 10,
     paddingVertical: 5,
     backgroundColor: "whitesmoke",
-    width: 90,
-    borderColor: "rgba(0,0,0,.04)",
-    borderWidth: 1,
     borderRadius: 7,
     flexDirection: "row",
     justifyContent: "space-around",
@@ -161,8 +123,8 @@ const styles = StyleSheet.create({
   detail: {},
   removeIcon: {
     paddingVertical: 5,
-    justifyContent: "space-between",
-    alignItems: "baseline",
+    flexDirection: "row",
+    gap: 10,
   },
   buttonText: {
     color: "white",

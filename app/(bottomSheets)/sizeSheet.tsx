@@ -4,45 +4,13 @@ import { router } from "expo-router";
 import { EvilIcons, Ionicons } from "@expo/vector-icons";
 import { sizeList } from "@/constants/custom";
 import { Size } from "@/constants/types";
+import { Colors } from "@/constants/Colors";
 
-const SizeSheet = () => {
+const SizeSheet = ({ close }: { close: () => void }) => {
   const [selectedSize, setSelectedSize] = useState<Size>(sizeList[0]);
 
   return (
-    <View style={{ padding: 20 }}>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          paddingBottom: 10,
-        }}
-      >
-        <View
-          style={{
-            width: 50,
-            height: 4,
-            backgroundColor: "rgba(0,0,0,.2)",
-            borderRadius: 20,
-          }}
-        />
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: 10,
-        }}
-      >
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Color</Text>
-        <Pressable
-          onPress={() => {
-            router.back();
-          }}
-          style={styles.closeIcon}
-        >
-          <EvilIcons name="close" size={18} color="black" />
-        </Pressable>
-      </View>
+    <View>
       {sizeList.map((size, index) => (
         <View
           key={index}
@@ -63,6 +31,17 @@ const SizeSheet = () => {
           </Pressable>
         </View>
       ))}
+
+      <Pressable
+        style={styles.button}
+        onPress={() => {
+          close();
+        }}
+      >
+        <Text style={{ fontSize: 17, fontWeight: "bold", color: "white" }}>
+          Done
+        </Text>
+      </Pressable>
     </View>
   );
 };
@@ -70,12 +49,13 @@ const SizeSheet = () => {
 export default SizeSheet;
 
 const styles = StyleSheet.create({
-  closeIcon: {
-    height: 30,
-    width: 30,
-    borderRadius: 25,
-    backgroundColor: "rgba(0,0,0,.1)",
-    justifyContent: "center",
+  button: {
+    width: "100%",
+    backgroundColor: Colors.identifier,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    marginVertical: 5,
+    borderRadius: 10,
     alignItems: "center",
   },
 });
